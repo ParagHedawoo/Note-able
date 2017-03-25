@@ -1,5 +1,6 @@
 package com.example.paraghedawoo.note_able;
 
+import android.provider.Settings;
 import android.support.design.widget.BaseTransientBottomBar;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.CardView;
@@ -28,6 +29,8 @@ public class RecyclerViewHolder extends RecyclerView.ViewHolder implements View.
 
     @Override
     public void onClick(View v) {
+        System.out.print("paraghedawoo"+v.getLayoutParams());
+
         Snackbar.make(v, "Item tapped", Snackbar.LENGTH_SHORT)
                 .setAction("Ok ?", new View.OnClickListener() {
                     @Override

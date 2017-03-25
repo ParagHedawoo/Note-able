@@ -1,9 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.paraghedawoo.note_able.NewNote">
 
-</android.support.constraint.ConstraintLayout>
+    <EditText
+        android:id="@+id/titleView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_margin="15dp"
+        android:textSize="20sp"
+        android:background="#00000000"
+        android:textStyle="bold"
+        android:hint="Title" />
+
+    <EditText
+        android:id="@+id/contentView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:hint="Edit note here"
+        android:gravity="start|top"
+        android:inputType="textMultiLine"
+        android:autoLink="email|web|phone"
+        android:layout_margin="15dp"
+        android:linksClickable="true"
+        android:background="#00000000"
+        android:textSize="15sp"
+        android:layout_below="@+id/titleView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+</RelativeLayout>

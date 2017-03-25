@@ -3,16 +3,19 @@ package com.example.paraghedawoo.note_able;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.support.design.widget.BaseTransientBottomBar;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AlertDialog;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.widget.EditText;
 import android.widget.Toast;
 
 
@@ -21,42 +24,36 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    static EditText setNoteTitle;
+    static EditText setNoteContent;
+    RecyclerView recyclerView;
+    DBAdapter dbAdapter;
+    ArrayList<Note> notes = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        dbAdapter = new DBAdapter(this);
+        dbAdapter.openDB();
+
         FloatingActionButton fab = (FloatingActionButton)findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new AlertDialog.Builder(getApplicationContext()).setView(R.layout.new_note_dialog).setCancelable(true).show();
+                startActivity(new Intent(v.getContext(), NewNote.class));
             }
         });
 
-        RecyclerView recyclerView = (RecyclerView)findViewById(R.id.recyclerView);
+        recyclerView = (RecyclerView)findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,1));
-        List<Note> noteList = getListItemData();
+        List<Note> noteList = dbAdapter.getAllNotes();
         RecyclerAdapter adapter = new RecyclerAdapter(MainActivity.this, noteList);
         recyclerView.setAdapter(adapter);
     }
 
-    public void createNote(View view){
-        startActivity(new Intent(getApplicationContext(), NewNote.class));
-    }
-
-    public void photo(View view){
-        Toast.makeText(getApplicationContext(), "new photo tapped", Toast.LENGTH_SHORT).show();
-    }
-
-    public void reminder(View view){
-        Toast.makeText(getApplicationContext(), "new reminder tapped", Toast.LENGTH_SHORT).show();
-    }
-
-    public void recording(View view){
-        Toast.makeText(getApplicationContext(), "new recording tapped", Toast.LENGTH_SHORT).show();
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -95,4 +92,15 @@ public class MainActivity extends AppCompatActivity {
         return list;
     }
 
+    @Override
+    protected void onResume() {
+        dbAdapter.openDB();
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        dbAdapter.closeDB();
+        super.onPause();
+    }
 }

@@ -17,7 +17,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerViewHolder> {
 
     private List<Note> noteList;
     Context context;
-    int col;
 
     public RecyclerAdapter(Context context, List<Note> noteList){
         this.context = context;
